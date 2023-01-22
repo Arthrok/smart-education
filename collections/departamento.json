@@ -1,0 +1,15 @@
+[{
+  "_id": {
+    "$oid": "63cd6fdb94573d2c4e68af71"
+  },
+  "nome": "Faculdade do Gama - Brasília",
+  "codigo": 1,
+  "_class": "com.smarteducation.smarteducation.model.Schema.Departamento"
+},{
+  "_id": {
+    "$oid": "63cd6fe894573d2c4e68af72"
+  },
+  "nome": "Departamento de Matemática",
+  "codigo": 2,
+  "_class": "com.smarteducation.smarteducation.model.Schema.Departamento"
+}]

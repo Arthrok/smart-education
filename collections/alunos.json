@@ -1,0 +1,103 @@
+[{
+  "_id": {
+    "$oid": "63cd72da94573d2c4e68af7e"
+  },
+  "curso": {
+    "_id": {
+      "$oid": "63cd72bc94573d2c4e68af7d"
+    },
+    "nome": "Engenharia de Software",
+    "semestresMin": 10,
+    "semestresMax": 16,
+    "estruturaCurricular": [
+      "Engenharia e Ambiente",
+      "Introdução à Engenharia",
+      "Desenho Industrial Assistido por Computador",
+      "Cálculo 1",
+      "Algoritmos e Programação de Computadores",
+      "Cálculo 2",
+      "Probabilidade e Estatística Aplicado a Engenharia",
+      "Desenvolvimento de Software"
+    ]
+  },
+  "semestre": 1,
+  "materias": [],
+  "historico": [
+    {
+      "materias": {
+        "_id": {
+          "$oid": "63cd71a194573d2c4e68af78"
+        },
+        "nome": "Cálculo 1",
+        "codigo": "MAT0025",
+        "professor": "Glauco Pedrosa",
+        "credito": 6,
+        "turma": "T-02",
+        "departamento": "Faculdade do Gama - Brasília",
+        "ano": 2022,
+        "semestre": 1,
+        "grade": [
+          {
+            "dia": "Segunda",
+            "horario": "14h"
+          },
+          {
+            "dia": "Terça",
+            "horario": "14h"
+          },
+          {
+            "dia": "Quinta",
+            "horario": "14h"
+          }
+        ],
+        "ativo": true
+      },
+      "frequencia": 0,
+      "nota": 0,
+      "status": 1
+    },
+    {
+      "materias": {
+        "_id": {
+          "$oid": "63cd71c994573d2c4e68af79"
+        },
+        "nome": "Algoritmos e Programação de Computadores",
+        "codigo": "CIC0004",
+        "professor": "Nilton Correia",
+        "credito": 6,
+        "turma": "T-01",
+        "departamento": "Faculdade do Gama - Brasília",
+        "ano": 2022,
+        "semestre": 1,
+        "grade": [
+          {
+            "dia": "Segunda",
+            "horario": "8h"
+          },
+          {
+            "dia": "Quarta",
+            "horario": "8h"
+          },
+          {
+            "dia": "Sexta",
+            "horario": "8h"
+          }
+        ],
+        "ativo": true
+      },
+      "frequencia": 0,
+      "nota": 0,
+      "status": 1
+    }
+  ],
+  "nome": "João Silva",
+  "matricula": 222033598,
+  "cpf": "70363168109",
+  "email": "joao@gmail.com",
+  "senha": "$2a$10$h5W4La/JnTm0DUFtQizZNueUUHnydcr7oP.6lY7lKMXcRl/btmrjC",
+  "dataNascimento": "2000-10-17",
+  "cargos": [
+    "Aluno"
+  ],
+  "_class": "com.smarteducation.smarteducation.model.Schema.Alunos"
+}]
