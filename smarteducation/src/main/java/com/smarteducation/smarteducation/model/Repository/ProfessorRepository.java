@@ -12,4 +12,7 @@ public interface ProfessorRepository extends MongoRepository<Professor, String>{
     List<Professor> findPositionalParameters(String departamento);
     
     Professor findByid(String id);
+    Professor findBynome(String nome);
+
+
 }

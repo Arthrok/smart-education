@@ -6,4 +6,5 @@ import com.smarteducation.smarteducation.model.Schema.Alunos;
 
 public interface AlunosRepository extends MongoRepository<Alunos, String>{
     Alunos findByid(String id);
+    Alunos findBycpf(String cpf);
 }

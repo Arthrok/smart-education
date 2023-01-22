@@ -4,10 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-
-
-
-import org.bson.json.JsonObject;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -24,22 +20,26 @@ public class Materias {
     private String departamento;
     private int ano;
     private int semestre;
-    private List<Grade> grades;
-
+    private List<Grade> grade = new ArrayList<>();
+    private boolean ativo;
 
     
+    
+    
+    public boolean isAtivo() {
+        return ativo;
+    }
+
+
+    public void setAtivo(boolean ativo) {
+        this.ativo = ativo;
+    }
+
 
     public void setRequisito(List<String> requisito) {
         this.requisito = requisito;
     }
 
-    public List<Grade> getGrades() {
-        return grades;
-    }
-
-    public void setGrades(List<Grade> grades) {
-        this.grades = grades;
-    }
 
     public Materias() {
     }
@@ -50,7 +50,7 @@ public class Materias {
     }
     
 
-    public Materias(String nome, String codigo, String requisito, String professor, int credito, String turma, String departamento, int ano, int semestre, JsonObject json) {
+    public Materias(String nome, String codigo, String requisito, String professor, int credito, String turma, String departamento, int ano, int semestre, String dia, String horario) {
         this.codigo = codigo;
         this.nome = nome;
         this.credito = credito;
@@ -63,7 +63,7 @@ public class Materias {
     }
     
     public Materias(String id, String nome, String codigo, String requisito, String professor, int credito, String turma, String departamento,
-            int ano, int semestre) {
+            int ano, int semestre, String dia, String horario) {
         this.id = id;
         this.nome = nome;
         this.codigo = codigo;
@@ -142,6 +142,19 @@ public class Materias {
 
     public void setProfessor(String professor) {
         this.professor = professor;
+    }
+
+
+    public List<Grade> getGrade() {
+        return grade;
+    }
+
+
+    public void setGrade(List<String> dias, List<String> horario) {
+        for(int i = 0; i < dias.size(); i++){
+            Grade gde = new Grade(dias.get(i), horario.get(i));
+            grade.add(gde);
+        }
     }
 
 

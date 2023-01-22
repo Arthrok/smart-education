@@ -1,7 +1,4 @@
 package com.smarteducation.smarteducation.model.Schema;
-
-import java.util.List;
-
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document

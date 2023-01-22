@@ -2,7 +2,6 @@ package com.smarteducation.smarteducation.model.CRUD;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -61,9 +60,21 @@ public class AlunosService {
         // lista de materias que o aluno ja cursou
         List<Materias> disponiveis = new ArrayList<>(); // lista final para retornar
         List<Status> historico = new ArrayList<>(aluno.getHistorico());
-        List<Status> materiasAtuais = new ArrayList<>(aluno.getMaterias());
         List<Materias> historicoFiltrado = new ArrayList<>(); // vai receber as materias do historico em que houve aprovação e que está sendo cursado
         List<String> historicoFiltradoNo = new ArrayList<>(); // vai receber as materias do historico em que houve aprovação e que está sendo cursado
+
+        if(historico.size() == 0 || historico.isEmpty()){
+            for (int k = materiasCurso.size() - 1; k >= 0; k = k-1){
+                if (materiasCurso.get(k).getRequisito() == null || materiasCurso.get(k).getRequisito().isEmpty()){
+                } else {
+                    materiasCurso.remove(k);
+                }
+            }
+        }
+
+        System.out.println(materiasCurso.size());
+
+
         for(int i = 0; i < historico.size(); i++){
             if(historico.get(i).getStatus() == 3){
                 historicoFiltrado.add(historico.get(i).getMaterias());
@@ -85,6 +96,8 @@ public class AlunosService {
                 }
             }
         }
+
+
         remover = remover.stream().distinct().collect(Collectors.toList());
         Collections.sort(remover, (a, b) -> b - a);
         remover.forEach(item -> materiasCurso.remove(item.intValue()));
@@ -110,6 +123,8 @@ public class AlunosService {
         Alunos aluno = this.alunosRepository.findByid(id);
         return aluno.getMaterias();
     }
+
+    
 
 
 

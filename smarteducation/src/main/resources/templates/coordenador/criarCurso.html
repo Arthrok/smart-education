@@ -18,18 +18,26 @@
 <body style="background-color: #212529;">
   <div th:replace="~{fragments/navbar :: navbar}"></div>
       <!-- String nome, long matricula, String cpf, String email, String senha, Date dataNascimento -->
-      <div class="card col-sm-4 mt-4" style="margin: 0 auto;">
+      <div class="card col-sm-6 mt-4" style="margin: 0 auto;">
         <div class="card-body">
             <form method="POST" action="/coordenador/process-curso">
                 <div class="mb-3">
                     <label for="nome" class="form-label">Nome do curso</label>
                     <input type="text" class="form-control" name="nome">
                   </div>
-                  <div class="mb-3">
-                    <label for="estruturaCurricular" class="form-label">Estrutura curricular</label>
-                    <select class="form-select" multiple aria-label="multiple select example" name="estruturaCurricular">
-                      <option th:each="item : ${listarMaterias}" th:value="${item.nome}" th:text="${item.nome}"></option>
-                    </select>
+                  <div class="row">
+                    <div class="mb-3 col-sm-6">
+                      <label for="estruturaCurricular" class="form-label">Estrutura curricular</label>
+                      <select class="form-select" id="estruturaCurricular" multiple aria-label="multiple select example" name="estruturaCurricular">
+                        <option th:each="item : ${listarMaterias}" th:value="${item.nome}" th:text="${item.nome}"></option>
+                      </select>
+                    </div>
+                    <div class="col-sm-6">
+                      <div class="card">
+                          <div class="card-body" style="height: 150px; overflow: hidden;overflow:scroll; white-space: nowrap;" id="lista">
+                          </div>
+                      </div>
+                    </div>
                   </div>
                   <div class="mb-3">
                     <label for="semestresMin" class="form-label">Quantidade mínima de semestres</label>
@@ -38,14 +46,27 @@
                     <input type="number" name="semestresMax" class="form-control">
                   </div>
                   
-                  <button class="form-control" type="submit">Criar Matéria</button>
+                  <button class="form-control" type="submit">Criar Curso</button>
             </form>
         </div>
       </div>
 
 
 
-
+      <script>
+        var listaObjetos = []
+        var select = document.getElementById("estruturaCurricular")
+        select.addEventListener("change", () => {
+          var lista = document.getElementById("lista")
+          const selectedOptions = select.querySelectorAll('option:checked');
+          lista.innerHTML = ""
+          selectedOptions.forEach(option => {
+            lista.innerHTML += `
+              <li>${option.value}</li>
+            `
+          })
+        })
+      </script>
 
 
     <script type="text/javascript" src="js/materialize.min.js"></script>      

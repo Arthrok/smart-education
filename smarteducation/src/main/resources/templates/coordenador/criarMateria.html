@@ -16,7 +16,7 @@
 <body style="background-color: #212529;">
   <div th:replace="~{fragments/navbar :: navbar}"></div>
       <!-- String nome, long matricula, String cpf, String email, String senha, Date dataNascimento -->
-      <div class="card col-sm-4 mt-4" style="margin: 0 auto;">
+      <div class="card col-sm-6 mt-4" style="margin: 0 auto;">
         <div class="card-body">
             <form method="POST" action="/coordenador/process-materia">
                 <div class="mb-3">
@@ -35,6 +35,7 @@
                     <label for="turma" class="form-label">Turma</label>
                     <input type="text" class="form-control" name="turma" placeholder="T-01">
                   </div>
+                 <input type="text" class="form-control" name="ativo" hidden value="1"> 
                   <div class="row">
                     <div class="mb-3 col-sm-6">
                       <label for="requisito" class="form-label">Requisitos</label>
@@ -50,10 +51,10 @@
                       </div>
                     </div>
                   </div>
-
-                  <div class="row mt-4">
+                  <!-- escolher dia e horario -->
+                  <div class="row mt-4"> 
                     <div class="mb-3 col-sm-6">
-                      <label for="requisito" class="form-label">Dia</label>
+                      <label for="dia" class="form-label">Dia</label>
                       <select class="form-select" multiple aria-label="multiple select example" name="dia" id="dia">
                         <option value="Segunda">Segunda</option>
                         <option value="Terça">Terça</option>
@@ -62,8 +63,12 @@
                         <option value="Sexta">Sexta</option>
                       </select>
                     </div>
-                    <div id="coisas" class="col-sm-6">
+                    <div class="col-sm-6">
+                      <div class="card">
+                        <div id="coisas" class="card-body" style="height: 150px; overflow: hidden;overflow-y: scroll; white-space: nowrap;">
 
+                        </div>
+                      </div>
                     </div>
                   </div>
                   <div class="mb-3">
@@ -108,6 +113,7 @@
 
 
       <script>
+        var listaObjetos = []
         var select = document.getElementById("requisito")
         select.addEventListener("change", () => {
           var lista = document.getElementById("lista")
@@ -123,16 +129,25 @@
         select2.addEventListener("change", () => {
           var lista = document.getElementById("coisas")
           const selectedOptions = select2.querySelectorAll('option:checked');
+          listaObjetos = []
           lista.innerHTML = ""
           selectedOptions.forEach(option => {
             lista.innerHTML += `
             <div class="mb-3">
-                    <label for="turma" class="form-label">Horario na ${option.value}</label>
-                    <input type="text" class="form-control" name="turma" placeholder="T-01">
+                    <label for="temp" class="form-label">Horario na ${option.value}</label>
+                    <select class="form-select horario" name="horario" aria-label="Default select example">
+                      <option value="8h">8h</option>
+                      <option value="10h">10h</option>
+                      <option value="14h">14h</option>
+                      <option value="16h">16h</option>
+                    </select>              
               </div>
             `
           })
+          console.log(listaObjetos)
         })
+    
+
 
 
       </script>

@@ -1,29 +1,24 @@
 package com.smarteducation.smarteducation.model.CRUD;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import javax.management.Query;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
-import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.mongodb.core.MongoTemplate;
-import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
 import com.smarteducation.smarteducation.model.Repository.AlunosRepository;
 import com.smarteducation.smarteducation.model.Repository.CoordenadorRepository;
 import com.smarteducation.smarteducation.model.Repository.CursoRepository;
 import com.smarteducation.smarteducation.model.Repository.DepartamentoRepository;
 import com.smarteducation.smarteducation.model.Repository.MateriaRepository;
 import com.smarteducation.smarteducation.model.Repository.ProfessorRepository;
+import com.smarteducation.smarteducation.model.Repository.UsuarioRepository;
 import com.smarteducation.smarteducation.model.Schema.Alunos;
 import com.smarteducation.smarteducation.model.Schema.Curso;
 import com.smarteducation.smarteducation.model.Schema.Departamento;
 import com.smarteducation.smarteducation.model.Schema.Materias;
 import com.smarteducation.smarteducation.model.Schema.Professor;
+import com.smarteducation.smarteducation.model.Schema.Usuario;
 
 @Service
 public class CoordenadorService {
@@ -39,24 +34,31 @@ public class CoordenadorService {
     CursoRepository cursoRepository;
     @Autowired
     AlunosRepository alunosRepository;
+    @Autowired
+    UsuarioRepository usuarioRepository;
 
+    public PasswordEncoder passwordEncoder() { //descriptografa a senha
+        return new BCryptPasswordEncoder();
+      }
 
     public void criaProfessor(Professor prof){
         this.professorRepository.save(prof);
         this.atualizarDepartamento(prof.getDepartamento());
+        //passwordEncoder().encode(aluno.getSenha())
+    }
+
+    public void criaProfessorUser(Professor prof, Usuario user){
+        prof.setSenha(passwordEncoder().encode(prof.getSenha()));
+        this.professorRepository.save(prof);
+        user.setSenha(prof.getSenha());
+        user.setId(prof.getId());
+        this.usuarioRepository.save(user);
     }
 
     public List<Professor> listarProfessores(){
         return this.professorRepository.findAll();
     }
 
-    // public Optional<User> findById(String id){
-    //     Optional<User> exit = this.userRepository.findById(id);
-    //     if (exit.isEmpty()){
-    //         throw new Error("Usuario nao encontrado!");
-    //     }
-    //     return exit;
-    // }
 
     public Professor findId(String id){
         Optional<Professor> prof = this.professorRepository.findById(id);
@@ -114,6 +116,13 @@ public class CoordenadorService {
         this.departamentoRepository.save(dep);
     }
 
+    public void atualizarMateria(String nomeA, String nomeN){
+        List<Materias> listAtt = this.materiaRepository.departamentoFindByprofessor(nomeA);
+        listAtt.forEach(materia -> {
+            materia.setProfessor(nomeN);
+            this.materiaRepository.save(materia);
+        });
+    }
 
     public void criarMateria(Materias materia){
         this.materiaRepository.save(materia);
@@ -173,8 +182,17 @@ public class CoordenadorService {
         }
     }
 
+    
     public void criarAluno(Alunos aluno){
         this.alunosRepository.save(aluno);
     }
+    public void criarAlunoUser(Alunos aluno, Usuario user){
+        aluno.setSenha(passwordEncoder().encode(aluno.getSenha()));
+        this.alunosRepository.save(aluno);
+        user.setSenha(aluno.getSenha());
+        user.setId(aluno.getId());
+        this.usuarioRepository.save(user);
+    }
+
 
 }

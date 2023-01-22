@@ -1,18 +1,15 @@
 package com.smarteducation.smarteducation.controller;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
-
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.ui.Model;
 import com.smarteducation.smarteducation.model.CRUD.CoordenadorService;
 import com.smarteducation.smarteducation.model.Schema.Alunos;
@@ -20,11 +17,11 @@ import com.smarteducation.smarteducation.model.Schema.Curso;
 import com.smarteducation.smarteducation.model.Schema.Departamento;
 import com.smarteducation.smarteducation.model.Schema.Materias;
 import com.smarteducation.smarteducation.model.Schema.Professor;
+import com.smarteducation.smarteducation.model.Schema.Usuario;
 
-import jakarta.websocket.server.PathParam;
 
 @Controller
-@ControllerAdvice
+// @PreAuthorize("hasAnyRole('professor')")
 @RequestMapping("/coordenador")
 public class CoordenadorController {
     @Autowired
@@ -44,8 +41,8 @@ public class CoordenadorController {
     }
 
     @PostMapping("/process-prof")
-    public String createProf(Professor prof){
-        this.coordenadorService.criaProfessor(prof);
+    public String createProf(Professor prof, Usuario user){
+        this.coordenadorService.criaProfessorUser(prof, user);
         return "redirect:/coordenador";
     }
 
@@ -68,7 +65,9 @@ public class CoordenadorController {
 
     @PostMapping("/process-edit-prof")
     public String edit(Professor professor){
+        String antigoNome = this.coordenadorService.findId(professor.getId()).getNome();
         this.coordenadorService.alterar(professor);
+        this.coordenadorService.atualizarMateria(antigoNome, professor.getNome());
         return "redirect:/coordenador/ver-professor";
     }
     
@@ -105,13 +104,6 @@ public class CoordenadorController {
         return "coordenador/vermaisDepartamento";
     }
 
-    // @ResponseBody
-    // @GetMapping("/ver-departamento/{id}")
-    // public List<Professor> depEsp2(@PathVariable String id){
-    //     List<Professor> professores = this.coordenadorService.professores(id);
-    //     return professores;
-    // }
-
     @GetMapping("/ver-departamento/editar/{id}")
     public String editDep(@PathVariable String id, Model model){
         Departamento departamento = this.coordenadorService.findDepId(id);
@@ -143,7 +135,10 @@ public class CoordenadorController {
     }
 
     @PostMapping("/process-materia")
-    public String criarMateria(Materias materia){
+    public String criarMateria(Materias materia, @RequestParam String dia, @RequestParam String horario){
+        List<String> dias = Arrays.stream(dia.replaceAll(",", "\n").split("\n")).collect(Collectors.toList());
+        List<String> horarios = Arrays.stream(horario.replaceAll(",", "\n").split("\n")).collect(Collectors.toList());
+        materia.setGrade(dias, horarios);
         this.coordenadorService.criarMateria(materia);
         return "redirect:/coordenador";
     }
@@ -227,9 +222,9 @@ public class CoordenadorController {
     }
     
     @PostMapping("/process-aluno")
-    public String procAluno(Alunos alunos, @RequestParam String curso){
+    public String procAluno(Alunos alunos, @RequestParam String curso, Usuario user){
         alunos.setCurso(this.coordenadorService.cursoBynome(curso));
-        this.coordenadorService.criarAluno(alunos);
+        this.coordenadorService.criarAlunoUser(alunos, user);
         return "redirect:/coordenador";
     }
 
