@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import com.smarteducation.smarteducation.model.CRUD.AlunosService;
 import com.smarteducation.smarteducation.model.Repository.AlunosRepository;
+import com.smarteducation.smarteducation.model.Repository.MateriaRepository;
 import com.smarteducation.smarteducation.model.Schema.Alunos;
 import com.smarteducation.smarteducation.model.Schema.Materias;
 import com.smarteducation.smarteducation.model.Schema.Status;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-
 import org.springframework.ui.Model;
 
 @Controller
@@ -23,6 +23,8 @@ public class AlunosController {
     AlunosService alunosService;
     @Autowired
     AlunosRepository alunosRepository;
+    @Autowired
+    MateriaRepository materiaRepository;
 
     public Alunos alunoLogado(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -52,6 +54,9 @@ public class AlunosController {
         Status materiaAtual = new Status();
         materiaAtual.setMaterias(materia);
         materiaAtual.setStatus(1);
+        Materias materiaAtt = this.materiaRepository.findByid(materiaAtual.getMaterias().getId());
+        materiaAtt.addAluno(aluno);
+        this.materiaRepository.save(materiaAtt);
         aluno.addHistorico(materiaAtual);
         this.alunosService.salvarAluno(aluno);
         return "redirect:/aluno/ver-matriculas";

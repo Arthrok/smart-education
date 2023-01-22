@@ -22,10 +22,33 @@ public class Materias {
     private int semestre;
     private List<Grade> grade = new ArrayList<>();
     private boolean ativo;
+    private List<Alunos> alunos = new ArrayList<>();
 
     
-    
-    
+        
+    public List<Alunos> getAlunos() {
+        return alunos;
+    }
+
+
+    public void setAlunos(List<Alunos> alunos) {
+        this.alunos = alunos;
+    }
+
+    public void addAluno(Alunos aluno){
+        this.alunos.add(aluno);
+    }
+
+
+    public void removeAluno(Alunos aluno){
+        for (int i = 0; i < alunos.size(); i++){
+            if (alunos.get(i).getId().equals(aluno.getId())){
+                alunos.remove(i);
+            }
+        }
+    }
+
+
     public boolean isAtivo() {
         return ativo;
     }

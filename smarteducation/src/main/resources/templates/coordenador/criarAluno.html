@@ -35,9 +35,14 @@
                     <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" name="email">
                   </div>
-                  <div class="mb-3">
+                  <div class="row">
                     <label for="matricula" class="form-label">Matrícula</label>
-                    <input type="number" class="form-control" name="matricula">
+                    <div class="mb-3 col-sm-9">
+                      <input type="text" class="form-control" name="matricula" id="matricula">
+                    </div>
+                    <div class="col-sm-3">
+                      <button class="btn btn-outline-info" style="width: 100%;" onclick="getRandomInt()" id="matric" type="button">Gerar</button>
+                    </div>
                   </div>
                   <div class="mb-3">
                     <label for="senha" class="form-label">Senha</label>
@@ -60,7 +65,14 @@
         </div>
       </div>
 
-
+      <script>
+        var butMatricula = document.getElementById("matricula")
+        function getRandomInt() {
+          min = Math.ceil(222000000);
+          max = Math.floor(222999999);
+          return butMatricula.value = Math.floor(Math.random() * (max - min) + min);
+        }
+      </script>
 
 
 

@@ -72,9 +72,6 @@ public class AlunosService {
             }
         }
 
-        System.out.println(materiasCurso.size());
-
-
         for(int i = 0; i < historico.size(); i++){
             if(historico.get(i).getStatus() == 3){
                 historicoFiltrado.add(historico.get(i).getMaterias());
