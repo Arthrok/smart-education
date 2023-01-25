@@ -16,7 +16,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body style="background-color: #212529;">
-  <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <nav th:replace="~{fragments/adminNav.html :: navType(true)}"></nav>
       <!-- String nome, long matricula, String cpf, String email, String senha, Date dataNascimento -->
       <div class="card col-sm-6 mt-4" style="margin: 0 auto;">
         <div class="card-body">

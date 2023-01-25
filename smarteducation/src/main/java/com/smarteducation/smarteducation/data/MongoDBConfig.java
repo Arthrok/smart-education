@@ -11,7 +11,7 @@ import com.mongodb.client.MongoClients;
 public class MongoDBConfig {
     @Bean
     public MongoClient mongoClient(){
-        return MongoClients.create("mongodb://localhost:27017");
+        return MongoClients.create("mongodb://docker:123456@localhost:27017");
     }
     @Bean
     public MongoTemplate mongoTemplate(){

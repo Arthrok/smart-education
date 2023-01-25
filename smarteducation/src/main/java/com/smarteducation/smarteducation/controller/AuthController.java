@@ -30,7 +30,7 @@ public class AuthController {
         if (user.getCargos().get(0).equals("professor")){
             redirect = "redirect:/coordenador";
         } else if(user.getCargos().get(0).equals("Aluno")) {
-            redirect = "redirect:/aluno/ver-matriculas";
+            redirect = "redirect:/aluno/materias";
         } else {
             redirect = "redirect:/coordenador";
         }
