@@ -14,7 +14,7 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body style="background-color: #212529;">
-  <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <nav th:replace="~{fragments/adminNav.html :: navType(true)}"></nav>
       <!-- String nome, long matricula, String cpf, String email, String senha, Date dataNascimento -->
       <div class="card col-sm-4 mt-4" style="margin: 0 auto;">
         <div class="card-body">
@@ -46,17 +46,18 @@
                   </div>
                   <div class="mb-3">
                     <label for="especialidades" class="form-label">Especialidades</label>
-                    <textarea class="form-control" name="especialidades" rows="1"></textarea>
+                    <div class="form-control" rows="3" id="textarea" hidden><p th:each="esp : ${prof.especialidades}" th:text="${esp}"></p></div>
+                    <textarea class="form-control" name="especialidades" rows="3" id="textArea"></textarea> 
                   </div>
                   <select class="form-select mb-3" multiple aria-label="multiple select example" name="cargos">
-                    <option value="Professor">Professor</option>
+                    <option value="Professor" selected>Professor</option>
                     <option value="Administrador">Administrador</option>
                   </select>
                   <div class="mb-3">
                     <label for="departamento" class="form-label">Departamento</label>
                     <select class="form-select" aria-label="Default select example" name="departamento">
-                      <option disabled selected></option>
-                      <option th:each="item : ${listarDepartamentos}" th:value="${item.nome}" th:text="${item.nome}"></option>
+                      <option disabled></option>
+                      <option th:each="item : ${listarDepartamentos}" th:value="${item.nome}" th:text="${item.nome}" th:selected="${item.nome == prof.departamento}"></option>
                     </select>
                   </div>
                   <button class="form-control" type="submit">Editar Professor</button>
@@ -66,7 +67,11 @@
 
 
 
-
+      <script>
+        var divText = document.getElementById("textarea")
+        var textArea = document.getElementById("textArea")
+        textArea.innerText = divText.innerText
+      </script>
 
 
     <script type="text/javascript" src="js/materialize.min.js"></script>      

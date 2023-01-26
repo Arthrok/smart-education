@@ -40,11 +40,11 @@ public class AlunosController {
     }
 
 
-    @GetMapping("/ver-matriculas")
-    public String verMatriculas(Model model){
+    @GetMapping("/materias")
+    public String materias(Model model){
         List<Status> materiasAtuais = this.alunosService.verMatriculasAtuais(alunoLogado().getId());
         model.addAttribute("materias", materiasAtuais);
-        return "alunos/verMatriculas";
+        return "alunos/materias";
     }
 
     @GetMapping("/realizar-matricula/{id}")
@@ -59,7 +59,7 @@ public class AlunosController {
         this.materiaRepository.save(materiaAtt);
         aluno.addHistorico(materiaAtual);
         this.alunosService.salvarAluno(aluno);
-        return "redirect:/aluno/ver-matriculas";
+        return "redirect:/aluno/materias";
     }
 
     @GetMapping("/historico")

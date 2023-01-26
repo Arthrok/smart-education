@@ -14,9 +14,9 @@
       <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 </head>
 <body style="background-color: #212529;">
-  <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <nav th:replace="~{fragments/adminNav.html :: navType(true)}"></nav>
       <!-- String nome, long matricula, String cpf, String email, String senha, Date dataNascimento -->
-      <div class="card col-sm-4 mt-4" style="margin: 0 auto;">
+      <div class="card col-sm-6 mt-4" style="margin: 0 auto;">
         <div class="card-body">
             <form method="POST" action="/coordenador/process-prof">
                 <div class="mb-3">
@@ -35,9 +35,14 @@
                     <label for="email" class="form-label">Email</label>
                     <input type="email" class="form-control" name="email">
                   </div>
-                  <div class="mb-3">
+                  <div class="row">
                     <label for="matricula" class="form-label">Matrícula</label>
-                    <input type="number" class="form-control" name="matricula">
+                    <div class="mb-3 col-sm-9">
+                      <input type="text" class="form-control" name="matricula" id="matricula">
+                    </div>
+                    <div class="col-sm-3">
+                      <button class="btn btn-outline-info" style="width: 100%;" onclick="getRandomInt()" id="matric" type="button">Gerar</button>
+                    </div>
                   </div>
                   <div class="mb-3">
                     <label for="senha" class="form-label">Senha</label>
@@ -62,7 +67,14 @@
 
 
 
-
+      <script>
+        var butMatricula = document.getElementById("matricula")
+        function getRandomInt() {
+          min = Math.ceil(222000000);
+          max = Math.floor(222999999);
+          return butMatricula.value = Math.floor(Math.random() * (max - min) + min);
+        }
+      </script>
 
 
     <script type="text/javascript" src="js/materialize.min.js"></script>      
