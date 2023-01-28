@@ -46,12 +46,26 @@
       var nota = document.getElementById("nota")
 
       but.addEventListener("click", () => {
-        if(nota.value >= 5 && freq.value >= 75){
+        if(nota.value < 0 || nota.value > 10 || frequencia.value < 0 || frequencia.value > 100) {
+          window.alert("Digite uma nota ou frequência válida")
+        } else {
+          if(nota.value >= 5 && freq.value >= 75){
           input.value = 2
         } else {
           input.value = 3
         }
+        }
+
+
       })
+
+    
+
+
+
+
+
+
     </script>
 
 
